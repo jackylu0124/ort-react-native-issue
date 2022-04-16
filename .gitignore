@@ -1,0 +1,4 @@
+# ignoring npm's node_modules folder
+**/node_modules/
+# ignoring output built files in Vue's output directory
+**/dist/
