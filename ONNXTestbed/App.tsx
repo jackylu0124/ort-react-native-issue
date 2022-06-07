@@ -33,12 +33,23 @@ import ndarray from "ndarray";
 import ops from "ndarray-ops";
 import {Env, Tensor} from "onnxruntime-react-native";
 import * as ort from "onnxruntime-react-native";
+import RNFS from "react-native-fs"
 
 async function runInfernece() {
   try {
-    const session: ort.InferenceSession = await ort.InferenceSession.create("./onnx_models/LinearBlend_v001.ort");
+    const dest = RNFS.TemporaryDirectoryPath+"/LinearBlend_v001.ort";
+    RNFS.downloadFile({fromUrl: Image.resolveAssetSource(require("./onnx_models/LinearBlend_v001.ort")).uri, toFile: dest});
+    const file_list = await RNFS.readDir(RNFS.TemporaryDirectoryPath);
+    // print out all the content inside the temporary directory
+    console.log("*************************************************");
+    console.log("Content inside the temporary directory:");
+    for (const f of file_list) {
+      console.log(f);
+    }
+    console.log("*************************************************");
+    const session: ort.InferenceSession = await ort.InferenceSession.create(dest);
   } catch(e) {
-    console.log("Error:", e);
+    console.log("Error Message:", e);
   }
 }
 

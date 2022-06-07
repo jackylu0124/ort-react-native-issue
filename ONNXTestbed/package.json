@@ -14,7 +14,8 @@
     "react-native": "0.68.0",
     "ndarray": "^1.0.19",
     "ndarray-ops": "^1.2.2",
-    "onnxruntime-react-native": "^1.11.0"
+    "onnxruntime-react-native": "1.12.0-dev.20220517-4dd3cc40c",
+    "react-native-fs": "^2.20.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
