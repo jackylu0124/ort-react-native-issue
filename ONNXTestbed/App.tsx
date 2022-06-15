@@ -47,7 +47,16 @@ async function runInfernece() {
       console.log(f);
     }
     console.log("*************************************************");
-    const session: ort.InferenceSession = await ort.InferenceSession.create(dest);
+    const session: ort.InferenceSession = await ort.InferenceSession.create("file://"+dest);
+    console.log("Inference session initialized!");
+    const img_1 = new Tensor("float32", new Float32Array(1 * 3 * 256 * 176).fill(0.2), [1, 3, 256, 176]);
+    const img_2 = new Tensor("float32", new Float32Array(1 * 3 * 256 * 176).fill(0.7), [1, 3, 256, 176]);
+    const alpha = new Tensor("float32", new Float32Array(1 * 256 * 176).fill(0.5), [1, 256, 176]);
+    const start_time = Date.now();
+    const outputs = await session.run({"img1": img_1, "img2": img_2, "alpha": alpha});
+    const end_time = Date.now();
+    console.log(`Inference time: ${(end_time-start_time).toFixed(3)} ms`);
+    console.log("outputs.blend.dims:", outputs.blend.dims);
   } catch(e) {
     console.log("Error Message:", e);
   }
